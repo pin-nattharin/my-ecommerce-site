@@ -27,6 +27,7 @@ router.post('/', (req, res) => {
         // step 4: write array back into file
         fs.writeFileSync(filePath, JSON.stringify(subscribes, null, 2));
         res.status(200).json({message : 'Email Received', subscribe});
+        
     } else {
         fs.writeFileSync(filePath, JSON.stringify(subscribe, null, 2));
         res.status(200).json({message : 'Email Received', subscribe});
