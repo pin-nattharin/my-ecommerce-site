@@ -1521,16 +1521,17 @@
         <div class="row justify-content-center">
         <div>
 
+
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#contact-us" aria-controls="contact-us" role="tab" data-toggle="tab">Home</a></li>
-            <li role="presentation"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">Profile</a></li>
-            <li role="presentation"><a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">Messages</a></li>
+            <li role="presentation" class="active"><a href="#contact-us" aria-controls="contact-us" role="tab" data-toggle="tab">Contact Us</a></li>
+            <li role="presentation"><a href="#register" aria-controls="register" role="tab" data-toggle="tab">Register</a></li>
+            <li role="presentation"><a href="#sign-in" aria-controls="sign-in" role="tab" data-toggle="tab">Sign-In</a></li>
           </ul>
 
           <!-- Tab panes -->
           <div class="tab-content">
-            <!-- Tab 1 -->
+            <!-- Tab 1 Contact Us-->
             <div role="tabpanel" class="tab-pane active" id="contact-us">
               <div class="row justify-content-center">
                 <div class="col-md-7">
@@ -1545,9 +1546,33 @@
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">
+                        <select id="category" name="category" class="form-control">
+                        <option value="">Occupation Category</option>
+                        <option value="computer">Computer</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="scientific">Scientific</option>
+                      </select>
+                      </div>
+                    </div>
+
+                      <div class="form-group row">
+                        <div class="col-md-12">
+                        <select id="occupation" name="occupation" class="form-control">
+                          <option value="">Occupation</option>
+                        </select>
+                        </div>
+                      </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
                         <input type="email" id="email" name="email" class="form-control" placeholder="Email">
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="password">
+                      </div>
+                    </div>
+                    <!--
                     <div class="form-group row">
                       <div class="col-md-12">
                         <select id="subject-list" name="subject" class="form-control">
@@ -1560,19 +1585,18 @@
                         <textarea class="form-control" id="message" name="message" class="form-control" cols="30" rows="10"
                           placeholder="Write your message here."></textarea>
                       </div>
-                    </div>
-                    <form>
+                    </div> 
+                    -->
                       <div class="form-group row">
                         <div class="col-md-7">
-                          <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                          <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="REGISTER">
                         </div>
                       </div>
                     </form>
-                  </form>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- Tab 2 -->
+            <!-- Tab 2 Register-->
             <div role="tabpanel" class="tab-pane" id="register">
               <div class="row justify-content-center">
                 <div class="col-md-7">
@@ -1603,19 +1627,17 @@
                           placeholder="Write your message here."></textarea>
                       </div>
                     </div>
-                    <form>
                       <div class="form-group row">
                         <div class="col-md-7">
                           <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                         </div>
                       </div>
                     </form>
-                  </form>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Tab 3 -->
+            <!-- Tab 3 Sign-In-->
             <div role="tabpanel" class="tab-pane" id="sign-in">
               <div class="row justify-content-center">
                 <div class="col-md-7">
@@ -1633,33 +1655,17 @@
                         <input type="email" class="form-control" placeholder="Email">
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <select id="subject-list" class="form-control">
-                          <option value="">Subject</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control"  id="message" name="message" class="form-control" cols="30" rows="10"
-                          placeholder="Write your message here."></textarea>
-                      </div>
-                    </div>
-                    <form>
                       <div class="form-group row">
                         <div class="col-md-7">
                           <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                         </div>
                       </div>
                     </form>
-                  </form>
+                  </div>
                 </div>
               </div>
+
             </div>
-          </div>
-        </div>
-      </div>
 
         <div class="row justify-content-center">
           <!--<div class="col-md-7">
@@ -1893,25 +1899,124 @@
       return response;
     }
 
-    
+
+    // ฟังก์ชันโหลด category จาก occupationcat.json ด้วย async/await
+    async function loadOccupationCategories() {
+      try {
+        const response = await fetch('./json/occupation-cat.json');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const categories = await response.json(); // array: ["computer", "healthcare", "scientific"]
+        const categorySelect = document.getElementById('category');
+
+        // เพิ่ม option
+      
+        categories.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category;
+          option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+          categorySelect.appendChild(option);
+        });
+      } catch (error) {
+        console.error('Error loading occupation categories:', error);
+      }
+    }
+
+    // โหลด category เมื่อหน้าเว็บโหลดเสร็จ
+    document.addEventListener('DOMContentLoaded', loadOccupationCategories);
+
+    // โหลดอาชีพเมื่อเปลี่ยน category
+    document.getElementById('category').addEventListener('change', async function () {
+      const category = this.value;
+      const occupationSelect = document.getElementById('occupation');
+
+      occupationSelect.innerHTML = '<option value="">Select Occupation</option>';
+
+      if (category !== '') {
+        try {
+          const response = await fetch(`./json/${category}.json`);
+          if (!response.ok) {
+            throw new Error("Failed to load occupations");
+          }
+
+          const occupations = await response.json();
+          occupations.forEach(job => {
+            const option = document.createElement('option');
+            option.value = job;
+            option.textContent = job;
+            occupationSelect.appendChild(option);
+          });
+        } catch (err) {
+          console.error('Error loading occupations:', err);
+        }
+      }
+    });
+
+    // ดึงอาชีพตามหมวดหมู่
+    document.getElementById('category').addEventListener('change', async function () {
+      const category = this.value;
+      const occupationSelect = document.getElementById('occupation');
+      occupationSelect.innerHTML = '<option value="">-- Select Occupation --</option>';
+      if (category !== '') {
+        try {
+          const response = await fetch(`./json/${category}.json`);
+          const occupations = await response.json();
+          occupations.forEach(occ => {
+            const option = document.createElement('option');
+            option.value = occ;
+            option.textContent = occ;
+            occupationSelect.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading occupations:", error);
+        }
+      }
+    });
+
+
 
     function contactSubmit(){
       let data = {
-                  fname : document.getElementById('fname').value,
-                  lname : document.getElementById('lname').value,
-                  email : document.getElementById('email').value,
-                  subject : document.getElementById('subject-list').value,
-                  message : document.getElementById('message').value
-                 }
+                  fname : document.getElementById('fname').value.trim(),
+                  lname : document.getElementById('lname').value.trim(),
+                  category : document.getElementById('category').value.trim(),
+                  occupation : document.getElementById('occupation').value.trim(),
+                  email : document.getElementById('email').value.trim(),
+                  password : document.getElementById('password').value.trim()
+                 };
       console.log(data);
+
+      
+
       let config = {
-                    url : 'http://localhost:3000/api/contact',
-                    method : 'POST', 
-                    data : data
-                  }
+        url : 'http://localhost:3000/api/contact',
+        method : 'POST', 
+        data : data
+      }
       let response =  ajax(config);
       console.log(response);
-    }
+
+      if (!data.fname || !data.lname || !data.category || !data.occupation || !data.email || !data.password) {
+        alert("Please fill in all fields.");
+        return;
+      } else {
+        fetch('http://localhost:3000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      alert(result.message || 'Register successfully');
+    })
+      }  
+}
+
+
 
     document.getElementById('subscribe-form').addEventListener('submit', async(e) => {
       e.preventDefault(); // not refresh the page
