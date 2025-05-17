@@ -1,0 +1,42 @@
+[
+  {
+    "fname": "pin",
+    "lname": "pin",
+    "email": "nattharin_ar@cmu.ac.th",
+    "password": "12345",
+    "category": "computer",
+    "occupation": "Software Developer"
+  },
+  {
+    "fname": "pin",
+    "lname": "nattharin",
+    "email": "nattharin@cmu.ac.th",
+    "password": "12345",
+    "category": "healthcare",
+    "occupation": "Surgeon"
+  },
+  {
+    "fname": "pin",
+    "lname": "500",
+    "email": "natthari888@cmu.ac.th",
+    "password": "12345",
+    "category": "computer",
+    "occupation": "Software developer"
+  },
+  {
+    "fname": "pin",
+    "lname": "nattharin",
+    "email": "nattharin3004@cmu.ac.th",
+    "password": "12345",
+    "category": "scientific",
+    "occupation": "Ecologist"
+  },
+  {
+    "fname": "pin",
+    "lname": "pin",
+    "email": "nattharin_ar00@cmu.ac.th",
+    "password": "12345",
+    "category": "computer",
+    "occupation": "Network administrator"
+  }
+]

@@ -1569,7 +1569,7 @@
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="password">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password">
                       </div>
                     </div>
                     <!--
@@ -1643,21 +1643,16 @@
                 <div class="col-md-7">
                   <form method="post" data-aos="fade">
                     <div class="form-group row">
-                      <div class="col-md-6 mb-3 mb-lg-0">
-                        <input type="text" class="form-control" placeholder="First name">
-                      </div>
-                      <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Last name">
-                      </div>
-                    </div>
-                    <div class="form-group row">
                       <div class="col-md-12">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" id="loginUsername" name="loginUsername" class="form-control" placeholder="Email">
+                      </div>
+                      <div class="col-md-12">
+                        <input type="password" id="loginPassword" name="loginPassword" class="form-control" placeholder="Password">
                       </div>
                     </div>
                       <div class="form-group row">
                         <div class="col-md-7">
-                          <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                          <input type="button" onclick="login()" class="btn btn-primary py-3 px-5 btn-block" value="LOGIN">
                         </div>
                       </div>
                     </form>
@@ -1988,21 +1983,11 @@
                  };
       console.log(data);
 
-      
-
-      let config = {
-        url : 'http://localhost:3000/api/contact',
-        method : 'POST', 
-        data : data
-      }
-      let response =  ajax(config);
-      console.log(response);
-
       if (!data.fname || !data.lname || !data.category || !data.occupation || !data.email || !data.password) {
         alert("Please fill in all fields.");
         return;
       } else {
-        fetch('http://localhost:3000/api/contact', {
+        fetch('http://localhost:5000/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -2015,6 +2000,31 @@
     })
       }  
 }
+
+async function login() {
+      const data = {
+        username: document.getElementById('loginUsername').value.trim(),
+        password: document.getElementById('loginPassword').value.trim()
+      };
+
+      if (!data.username || !data.password) {
+        alert("Please enter both username and password.");
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        alert(result.message);
+      } catch (err) {
+        console.error(err);
+        alert('Error logging in');
+      }
+    }
 
 
 
