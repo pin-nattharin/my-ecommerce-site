@@ -1532,7 +1532,47 @@
           <!-- Tab panes -->
           <div class="tab-content">
             <!-- Tab 1 Contact Us-->
-            <div role="tabpanel" class="tab-pane active" id="contact-us">
+            <div role="tabpanel" class="tab-pane" id="contact-us">
+              <div class="row justify-content-center">
+                <div class="col-md-7">
+                  <form method="post" data-aos="fade">
+                    <div class="form-group row">
+                      <div class="col-md-6 mb-3 mb-lg-0">
+                        <input type="text" id="fname" name="fname" class="form-control" placeholder="First name">
+                      </div>
+                      <div class="col-md-6">
+                        <input type="text" id="lname" name="lname" class="form-control" placeholder="Last name">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <select id="subject-list" class="form-control">
+                          <option value="">Subject</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <textarea class="form-control"  id="message" name="message" class="form-control" cols="30" rows="10"
+                          placeholder="Write your message here."></textarea>
+                      </div>
+                    </div>
+                      <div class="form-group row">
+                        <div class="col-md-7">
+                          <input type="button" onclick="tab2()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            <!-- Tab 2 Register-->
+            <div role="tabpanel" class="tab-pane active" id="register">
               <div class="row justify-content-center">
                 <div class="col-md-7">
                   <form id ="contact-form" data-aos="fade">  <!--edit this line-->
@@ -1590,46 +1630,6 @@
                       <div class="form-group row">
                         <div class="col-md-7">
                           <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="REGISTER">
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            <!-- Tab 2 Register-->
-            <div role="tabpanel" class="tab-pane" id="register">
-              <div class="row justify-content-center">
-                <div class="col-md-7">
-                  <form method="post" data-aos="fade">
-                    <div class="form-group row">
-                      <div class="col-md-6 mb-3 mb-lg-0">
-                        <input type="text" class="form-control" placeholder="Nickname">
-                      </div>
-                      <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Name">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <input type="email" class="form-control" placeholder="Email">
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <select id="subject-list" class="form-control">
-                          <option value="">Subject</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <textarea class="form-control"  id="message" name="message" class="form-control" cols="30" rows="10"
-                          placeholder="Write your message here."></textarea>
-                      </div>
-                    </div>
-                      <div class="form-group row">
-                        <div class="col-md-7">
-                          <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                         </div>
                       </div>
                     </form>
@@ -2000,6 +2000,34 @@
     })
       }  
 }
+
+function tab2(){
+      let data = {
+                  fname : document.getElementById('fname').value.trim(),
+                  lname : document.getElementById('lname').value.trim(),
+                  email : document.getElementById('email').value.trim(),
+                  subject : document.getElementById('subject-list').value.trim(),
+                  message : document.getElementById('message').value.trim()
+                 };
+      console.log(data);
+
+          if (!data.fname || !data.lname || !data.email || !data.subject || !data.message ) {
+        alert("Please fill in all fields.");
+        return;
+      } else {
+        fetch('http://localhost:3000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      alert(result.message || 'contact successfully');
+    })
+      } 
+                }
 
 async function login() {
       const data = {
